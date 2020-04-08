@@ -74,20 +74,23 @@ class _MyHomePageState extends State<MyHomePage> {
     vibrationPattern[3] = 2000;
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your other channel id',
-        'your other channel name',
-        'your other channel description',
-        icon: 'secondary_icon',
-        sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-        largeIcon: DrawableResourceAndroidBitmap('sample_large_icon'),
-        vibrationPattern: vibrationPattern,
-        enableLights: true,
-        color: const Color.fromARGB(255, 255, 0, 0),
-        ledColor: const Color.fromARGB(255, 255, 0, 0),
-        ledOnMs: 1000,
-        ledOffMs: 500);
-    var iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(sound: 'slow_spring_board.aiff');
+      'your other channel id',
+      'your other channel name',
+      'your other channel description',
+      icon: 'app_icon',
+      sound: RawResourceAndroidNotificationSound('slow_spring_board'),
+      largeIcon: DrawableResourceAndroidBitmap('me'),
+      vibrationPattern: vibrationPattern,
+      playSound: true,
+      enableVibration: true,
+      enableLights: true,
+      // color: const Color.fromARGB(255, 255, 0, 0),
+      // ledColor: const Color.fromARGB(255, 255, 0, 0),
+      // ledOnMs: 1000,
+      // ledOffMs: 500
+    );
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    // sound: 'slow_spring_board.aiff'
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
