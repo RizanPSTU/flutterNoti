@@ -65,40 +65,41 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future showNoti() async {
-    var scheduledNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 10));
-    var vibrationPattern = Int64List(4);
-    vibrationPattern[0] = 0;
-    vibrationPattern[1] = 1000;
-    vibrationPattern[2] = 5000;
-    vibrationPattern[3] = 2000;
+    // var scheduledNotificationDateTime =
+    //     DateTime.now().add(Duration(seconds: 10));
+    // var vibrationPattern = Int64List(4);
+    // vibrationPattern[0] = 0;
+    // vibrationPattern[1] = 1000;
+    // vibrationPattern[2] = 5000;
+    // vibrationPattern[3] = 2000;
 
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'your other channel id',
-      'your other channel name',
-      'your other channel description',
-      icon: 'app_icon',
-      sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-      largeIcon: DrawableResourceAndroidBitmap('me'),
-      vibrationPattern: vibrationPattern,
-      playSound: true,
-      enableVibration: true,
-      enableLights: true,
-      // color: const Color.fromARGB(255, 255, 0, 0),
-      // ledColor: const Color.fromARGB(255, 255, 0, 0),
-      // ledOnMs: 1000,
-      // ledOffMs: 500
-    );
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    // sound: 'slow_spring_board.aiff'
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.schedule(
-        0,
-        'scheduled title',
-        'scheduled body',
-        scheduledNotificationDateTime,
-        platformChannelSpecifics);
+    // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    //   'your other channel id',
+    //   'your other channel name',
+    //   'your other channel description',
+    //   icon: 'app_icon',
+    //   sound: RawResourceAndroidNotificationSound('slow_spring_board'),
+    //   largeIcon: DrawableResourceAndroidBitmap('me'),
+    //   vibrationPattern: vibrationPattern,
+    //   playSound: true,
+    //   enableVibration: true,
+    //   enableLights: true,
+    //   // color: const Color.fromARGB(255, 255, 0, 0),
+    //   // ledColor: const Color.fromARGB(255, 255, 0, 0),
+    //   // ledOnMs: 1000,
+    //   // ledOffMs: 500
+    // );
+    // var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    // // sound: 'slow_spring_board.aiff'
+    // var platformChannelSpecifics = NotificationDetails(
+    //     androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    // await flutterLocalNotificationsPlugin.schedule(
+    //     0,
+    //     'scheduled title',
+    //     'scheduled body',
+    //     scheduledNotificationDateTime,
+    //     platformChannelSpecifics);
+
     // var scheduledNotificationDateTime =
     //     DateTime.now().add(Duration(seconds: 15));
     // var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -123,6 +124,59 @@ class _MyHomePageState extends State<MyHomePage> {
     // await flutterLocalNotificationsPlugin.show(
     //     0, 'plain title', 'plain body', platformChannelSpecifics,
     //     payload: 'item x');
+    await flutterLocalNotificationsPlugin.cancelAll();
+
+    var vibrationPattern = Int64List(4);
+    vibrationPattern[0] = 0;
+    vibrationPattern[1] = 1000;
+    vibrationPattern[2] = 5000;
+    vibrationPattern[3] = 2000;
+
+    var time = Time(10, 00, 0);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'your other channel id',
+      'your other channel name',
+      'your other channel description',
+      icon: 'moodnoty',
+      sound: RawResourceAndroidNotificationSound('slow_spring_board'),
+      // largeIcon: DrawableResourceAndroidBitmap('me'),
+      vibrationPattern: vibrationPattern,
+      playSound: true,
+      enableVibration: true,
+    );
+
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'mood',
+        'mood morning! How are you feeling today?',
+        time,
+        platformChannelSpecifics);
+
+    var time2 = Time(20, 10, 0);
+    var androidPlatformChannelSpecifics2 = AndroidNotificationDetails(
+      'your other channel id2',
+      'your other channel name2',
+      'your other channel description2',
+      icon: 'moodnoty',
+      sound: RawResourceAndroidNotificationSound('slow_spring_board'),
+      // largeIcon: DrawableResourceAndroidBitmap('me'),
+      vibrationPattern: vibrationPattern,
+      playSound: true,
+      enableVibration: true,
+    );
+
+    var iOSPlatformChannelSpecifics2 = IOSNotificationDetails();
+    var platformChannelSpecifics2 = NotificationDetails(
+        androidPlatformChannelSpecifics2, iOSPlatformChannelSpecifics2);
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
+        1,
+        'mood',
+        'night-time, mood-time! Some of your friends are now in the mood :)',
+        time2,
+        platformChannelSpecifics2);
   }
 
   // await flutterLocalNotificationsPlugin.cancelAll();
@@ -148,7 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _counter > 1 ? null : _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
