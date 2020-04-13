@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/launcher_icon');
     // var initializationSettingsIOS = IOSInitializationSettings(
     //     onDidReceiveLocalNotification: onDidReceiveLocalNotification);
     var initializationSettingsIOS = IOSInitializationSettings();
@@ -65,6 +65,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future showNoti() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+
+    // List<String> lines = List<String>();
+    // lines.add(
+    //     'Alex Faarborg sddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd Check this out');
+    // lines.add(
+    //     'Jeff Chang  dssssssssssssssssssssssssssssssssssssssssssssssssssssssss  Launch Party');
+
+    // InboxStyleInformation inboxStyleInformation = InboxStyleInformation(lines,
+    //     contentTitle: '2 new messages', summaryText: 'janedoe@example.com');
+
+    // var bigTextStyleInformation = BigTextStyleInformation('');
+
     // var scheduledNotificationDateTime =
     //     DateTime.now().add(Duration(seconds: 10));
     // var vibrationPattern = Int64List(4);
@@ -77,13 +90,17 @@ class _MyHomePageState extends State<MyHomePage> {
     //   'your other channel id',
     //   'your other channel name',
     //   'your other channel description',
-    //   icon: 'app_icon',
+    //   icon: 'iconm',
+    //   color: Color(0x70c5b3),
+    //   // largeIcon: DrawableResourceAndroidBitmap('me'),
     //   sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-    //   largeIcon: DrawableResourceAndroidBitmap('me'),
+    //   // largeIcon: DrawableResourceAndroidBitmap('me'),
     //   vibrationPattern: vibrationPattern,
     //   playSound: true,
     //   enableVibration: true,
     //   enableLights: true,
+    //   styleInformation: bigTextStyleInformation,
+
     //   // color: const Color.fromARGB(255, 255, 0, 0),
     //   // ledColor: const Color.fromARGB(255, 255, 0, 0),
     //   // ledOnMs: 1000,
@@ -93,12 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // // sound: 'slow_spring_board.aiff'
     // var platformChannelSpecifics = NotificationDetails(
     //     androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    // await flutterLocalNotificationsPlugin.schedule(
-    //     0,
-    //     'scheduled title',
-    //     'scheduled body',
-    //     scheduledNotificationDateTime,
-    //     platformChannelSpecifics);
+    // await flutterLocalNotificationsPlugin.schedule(0, 'scheduled title',
+    //     'rizan', scheduledNotificationDateTime, platformChannelSpecifics);
 
     // var scheduledNotificationDateTime =
     //     DateTime.now().add(Duration(seconds: 15));
@@ -124,62 +137,57 @@ class _MyHomePageState extends State<MyHomePage> {
     // await flutterLocalNotificationsPlugin.show(
     //     0, 'plain title', 'plain body', platformChannelSpecifics,
     //     payload: 'item x');
-    await flutterLocalNotificationsPlugin.cancelAll();
 
     var vibrationPattern = Int64List(4);
     vibrationPattern[0] = 0;
     vibrationPattern[1] = 1000;
     vibrationPattern[2] = 5000;
     vibrationPattern[3] = 2000;
-
+//Notification 1
+    var bigTextStyleInformation =
+        BigTextStyleInformation('mood morning! How are you feeling today?');
     var time = Time(10, 00, 0);
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your other channel id',
       'your other channel name',
       'your other channel description',
-      icon: 'moodnoty',
+      icon: 'iconm',
       sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-      // largeIcon: DrawableResourceAndroidBitmap('me'),
       vibrationPattern: vibrationPattern,
       playSound: true,
       enableVibration: true,
+      styleInformation: bigTextStyleInformation,
     );
 
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'mood',
-        'mood morning! How are you feeling today?',
-        time,
-        platformChannelSpecifics);
+        0, 'mood', '', time, platformChannelSpecifics);
 
+    //Notification 2
+    var bigTextStyleInformation2 = BigTextStyleInformation(
+        'night-time, mood-time! Some of your friends are now in the mood :)');
     var time2 = Time(20, 10, 0);
     var androidPlatformChannelSpecifics2 = AndroidNotificationDetails(
       'your other channel id2',
       'your other channel name2',
       'your other channel description2',
-      icon: 'moodnoty',
+      icon: 'iconm',
       sound: RawResourceAndroidNotificationSound('slow_spring_board'),
-      // largeIcon: DrawableResourceAndroidBitmap('me'),
       vibrationPattern: vibrationPattern,
       playSound: true,
       enableVibration: true,
+      styleInformation: bigTextStyleInformation2,
     );
 
     var iOSPlatformChannelSpecifics2 = IOSNotificationDetails();
     var platformChannelSpecifics2 = NotificationDetails(
         androidPlatformChannelSpecifics2, iOSPlatformChannelSpecifics2);
     await flutterLocalNotificationsPlugin.showDailyAtTime(
-        1,
-        'mood',
-        'night-time, mood-time! Some of your friends are now in the mood :)',
-        time2,
-        platformChannelSpecifics2);
+        1, 'mood', '', time2, platformChannelSpecifics2);
   }
-
-  // await flutterLocalNotificationsPlugin.cancelAll();
 
   @override
   Widget build(BuildContext context) {
@@ -201,11 +209,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _counter > 1 ? null : _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: _counter >= 1
+          ? null
+          : FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Increment',
+              child: Icon(Icons.add),
+            ),
     );
   }
 }
